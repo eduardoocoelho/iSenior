@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cadastro de Notícias</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="dbArtigos.js"></script>
+</head>
+
+<body onload="init()">
+    <h1>Cadastro de Notícias</h1>
+
+    <div>
+        <div class="d-flex flex-column align-items-center justify-content-center">
+            <button class="voltar-btn btn btn-info"><a href="../administrador.html">Voltar</a></button>
+        </div>
+
+        <div class="row">
+            <div id="msg" class="col-sm-10 offset-sm-1 ">
+                <!--<div class="alert alert-warning">Notícia não encontrada.</div>-->
+            </div>
+        </div>
+
+        <form id="form-noticia">
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <label for="inputId">Id</label>
+                    <input type="text" class="form-control" id="inputId" id=id_noticias placeholder="ID" disabled>
+                </div>
+                <div class="col-sm-8">
+                    <label for="inputTitulo">Título (*)</label>
+                    <input type="text" class="form-control" id="inputTitulo" id="titulo_noticias" required placeholder="Informe o título da notícia">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <label for="inputAutores">Autores (*)</label>
+                    <input type="text" class="form-control" id="inputAutores" id="autores_noticias" required placeholder="Informe os autores da notícia">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label for="inputPublicoalvo">Público-alvo</label>
+                    <input type="text" class="form-control" id="inputPublicoalvo" id="publicoalvo_noticias" placeholder="Informe o público-alvo da notícia" >
+                </div>
+                <div class="col-sm-6">
+                    <label for="inputCategoria">Categoria</label>
+                    <input type="text" class="form-control" id="inputCategoria" id="categoria_noticias" required placeholder="Informe a categoria da notícia">
+                </div>
+            </div>
+            <div class="form-group row">    
+                <div class="col-sm-12">
+                    <label for="inputDescricao">Descrição (*)</label>
+                    <input type="text" class="form-control" id="inputDescricao" id="descricao_noticia" required placeholder="Descreva a notícia">
+                </div>
+            </div>
+            <div class="form-group row">    
+                <div class="col-sm-12">
+                    <label for="inputPalavraschave">Palavras-Chave (*)</label>
+                    <input type="text" class="form-control" id="inputPalavraschave" id="palavraschave_noticias" required placeholder="Digite as palavras-chave da notícia">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label for="inputVideo">Video (*)</label>
+                    <input type="text" class="form-control" id="inputVideo" id="video_noticias" required placeholder="Insira o link do video da notícia">
+                </div>
+                <div class="col-sm-6">
+                    <label for="inputLegendavideo">Legenda do Vídeo (*)</label>
+                    <input type="text" class="form-control" id="inputLegendavideo" id="legenda_video_noticias" required placeholder="Digite uma legenda para o vídeo">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label for="inputImagem">Imagem (*)</label>
+                    <input type="text" class="form-control" id="inputImagem" id="imagem_noticias" required placeholder="Insira uma imagem para a notícia">
+                </div>
+                <div class="col-sm-6">
+                    <label for="inputLegendaimagem">Legenda da Imagem </label>
+                    <input type="text" class="form-control" id="inputLegendaimagem" id="legenda_imagem_noticias" required placeholder="Digite uma legenda para a imagem">
+                </div>
+            </div>
+            <div class="form-group row">    
+                <div class="col-sm-12">
+                    <label for="inputTexto">Texto (*)</label>
+                    <input type="text" class="form-control" id="inputTexto" id="texto_noticia" required placeholder="Digite o texto da notícia">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <small>(*) Campos obrigatórios</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <input type="button" class="btn btn-success" id="btnInsert" value="Inserir">
+                    <input type="button" class="btn btn-warning" id="btnUpdate" value="Alterar">
+                    <input type="button" class="btn btn-danger" id="btnDelete" value="Excluir">
+                    <input type="button" class="btn btn-secondary" id="btnClear" value="Limpar Form">
+                    <a href="lista_noticia.html"><input type="button" class="btn btn-warning" id="btnClear" value="Pesquisar Notícias"></a>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="grid-noticia" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Autores</th>
+                            <th scope="col">Público-alvo</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Palavras-Chave</th>
+                            <th scope="col">Texto</th>
+                            <th scope="col">Video</th>
+                            <th scope="col">Legenda do Vídeo</th>
+                            <th scope="col">Imagem</th>
+                            <th scope="col">Legenda da Imagem</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-noticia">
+                        <tr>
+                            <td scope="row">1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>
+        function exibeNoticia() {
+            // Remove todas as linhas do corpo da tabela
+            $("#table-noticia").html("");
+
+            // Popula a tabela com os registros do banco de dados
+            for (i = 0; i < db.data.length; i++) {
+                let noticia = db.data[i];    
+                $("#table-noticia").append(`<tr><td scope="row">${noticia.id}</td>
+                                                <td>${noticia.titulo}</td>
+                                                <td>${noticia.autores}</td>
+                                                <td>${noticia.publicoalvo}</td>
+                                                <td>${noticia.categoria}</td>
+                                                <td>${noticia.descricao}</td>
+                                                <td>${noticia.palavraschave}</td>
+                                                <td>${noticia.texto}</td>
+                                                <td>${noticia.video}</td>
+                                                <td>${noticia.legendavideo}</td>
+                                                <td>${noticia.imagem}</td>
+                                                <td>${noticia.legendaimagem}</td>
+                                            </tr>`);
+            }
+        }
+
+        function init() {
+
+            // Adiciona funções para tratar os eventos 
+            $("#btnInsert").click(function () {
+                // Verfica se o formulário está preenchido corretamente
+                if (!$('#form-noticia')[0].checkValidity()) {
+                    displayMessage("Preencha o formulário corretamente.");
+                    return;
+                }
+
+                // Obtem os valores dos campos do formulário
+                let campoTitulo = $("#inputTitulo").val();
+                let campoAutores = $("#inputAutores").val();
+                let campoPublicoalvo = $("#inputPublicoalvo").val();
+                let campoCategoria = $('#inputCategoria').val();
+                let campoDescricao = $('#inputDescricao').val();
+                let campoPalavraschave = $('#inputPalavraschave').val();
+                let campoTexto = $('#inputTexto').val();
+                let campoVideo = $('#inputVideo').val();
+                let campoLegendavideo = $('#inputLegendavideo').val();
+                let campoImagem = $('#inputImagem').val();
+                let campoLegendaimagem = $('#inputLegendaimagem').val();
+                let noticia = { titulo: campoTitulo, 
+                    autores: campoAutores,  
+                    publicoalvo: campoPublicoalvo, 
+                    categoria: campoCategoria,
+                    descricao: campoDescricao,
+                    palavraschave: campoPalavraschave,
+                    texto: campoTexto,
+                    video: campoVideo,
+                    legendavideo: campoLegendavideo,
+                    imagem: campoImagem,
+                    legendaimagem: campoLegendaimagem };
+
+                insertNoticia(noticia);
+
+                // Reexibe as notícias
+                exibeNoticia();
+
+                // Limpa o formulario
+                $("#form-noticia")[0].reset();
+            });
+
+            // Intercepta o click do botão Alterar
+            $("#btnUpdate").click(function () {
+                // Obtem os valores dos campos do formulário
+                let campoId = $("#inputId").val();
+                if (campoId == "") {
+                    displayMessage("Selecione uma notícia para ser alterada.");
+                    return;
+                }
+                let campoTitulo = $("#inputTitulo").val();
+                let campoAutores = $("#inputAutores").val();
+                let campoPublicoalvo = $("#inputPublicoalvo").val();
+                let campoCategoria = $("#inputCategoria").val();
+                let campoDescricao = $('#inputDescricao').val();
+                let campoPalavraschave = $('#inputPalavraschave').val();
+                let campoTexto = $('#inputTexto').val();
+                let campoVideo = $('#inputVideo').val();
+                let campoLegendavideo = $('#inputLegendavideo').val();
+                let campoImagem = $('#inputImagem').val();
+                let campoLegendaimagem = $('#inputLegendaimagem').val();
+                let noticia = { titulo: campoTitulo, 
+                    autores: campoAutores,  
+                    publicoalvo: campoPublicoalvo, 
+                    categoria: campoCategoria,
+                    descricao: campoDescricao,
+                    palavraschave: campoPalavraschave,
+                    texto: campoTexto,
+                    video: campoVideo,
+                    legendavideo: campoLegendavideo,
+                    imagem: campoImagem,
+                    legendaimagem: campoLegendaimagem };
+
+                updateNoticia(parseInt(campoId), noticia);
+
+                // Reexibe as notícias
+                exibeNoticia();
+
+                // Limpa o formulario
+                $("#form-noticia")[0].reset();
+            });
+
+            // Intercepta o click do botão Excluir
+            $("#btnDelete").click(function () {
+                let campoId = $("#inputId").val();
+                if (campoId == "") {
+                    displayMessage("Selecione uma noticia a ser excluída.");
+                    return;
+                }
+                deleteNoticia(parseInt(campoId));
+
+                // Reexibe as notícias
+                exibeNoticia();
+
+                // Limpa o formulario
+                $("#form-noticia")[0].reset();
+            });
+
+            // Intercepta o click do botão Listar Notícias
+            $("#btnClear").click(function () {
+                $("#form-noticia")[0].reset();
+            });
+
+            // Oculta a mensagem de aviso após alguns segundos
+            $('#msg').bind("DOMSubtreeModified", function () {
+                window.setTimeout(function () {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                        $(this).remove();
+                    });
+                }, 5000);
+            });
+
+            // Preenche o formulário quando o usuario clicar em uma linha da tabela 
+            $("#grid-noticia").on("click", "tr", function (e) {
+                let linhaNoticia = this;
+                colunas = linhaNoticia.querySelectorAll("td");
+
+                $("#inputId").val(colunas[0].innerText);
+                $("#inputTitulo").val(colunas[1].innerText);
+                $("#inputAutores").val(colunas[2].innerText);
+                $("#inputPublicoalvo").val(colunas[3].innerText);
+                $("#inputCategoria").val(colunas[4].innerText);
+                $("#inputDescricao").val(colunas[5].innerText);
+                $("#inputPalavraschave").val(colunas[6].innerText);
+                $("#inputTexto").val(colunas[7].innerText);
+                $("#inputVideo").val(colunas[8].innerText);
+                $("#inputLegendavideo").val(colunas[9].innerText);
+                $("#inputImagem").val(colunas[10].innerText);
+                $("#inputLegendaimagem").val(colunas[11].innerText);
+            });
+
+            exibeNoticia();
+        }
+    </script>
+    <script src="app.js"></script>  
+</body>
+
+</html>

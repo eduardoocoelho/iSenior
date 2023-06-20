@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cadastro de Notícias</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">    
+</head>
+
+<body onload="ListaNoticia()">
+    <h1>Listagem de Notícias</h1>
+
+    <div>
+        <div class="row">
+            <div id="msg" class="col-sm-10 offset-sm-1 ">
+                <!--<div class="alert alert-warning">Notícia não encontrada.</div>-->
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="msg" class="col-sm-2 offset-sm-10 ">
+                <a href="cadastro.html"><input type="button" class="btn btn-warning" id="btnClear" value="Cadastro"></a>
+            </div>
+        </div>        
+        
+        <form id="form-noticia">            
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <select name="filtro_publicoalvo" id="filtro_publicoalvo" onchange="ListaNoticia()" class="form-control">
+                        <option value="">Selecione o Público-Alvo</option>
+                        <option value="Idosos">Idosos</option>
+                        <option value="Cuidadores">Cuidadores</option>
+                        <option value="Familiares">Familiares</option>
+                        <option value="Geral">Geral</option>
+                    </select>                    
+                </div>
+                <div class="col-sm-8">
+                    <select name="filtro_categoria" id="filtro_categoria" onchange="ListaNoticia()"  class="form-control">
+                        <option value="">Selecione a Categoria</option>
+                        <option value="Dia a Dia">Dia a Dia</option>
+                        <option value="Configurações">Configurações</option>
+                        <option value="Cuidados">Cuidados</option>
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="grid-noticia" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Autores</th>
+                            <th scope="col">Público-alvo</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Palavras-Chave</th>
+                            <th scope="col">Texto</th>
+                            <th scope="col">Video</th>
+                            <th scope="col">Legenda do Vídeo</th>
+                            <th scope="col">Imagem</th>
+                            <th scope="col">Legenda da Imagem</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-noticia">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="dbArtigos.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // função para listar na tabela as notícias que estão associadas aos filtros 
+        function ListaNoticia() {
+            
+            // Obtem os dados informados pelo usuário nos filtros
+            let fc = document.getElementById('filtro_publicoalvo').value;
+            let fcg = document.getElementById('filtro_categoria').value;
+
+            // limpa a lista de notícias apresentadas
+            $("#table-noticia").empty();
+
+            // Popula a tabela com os registros do banco de dados
+            for (let index = 0; index < db.data.length; index++) {
+                const noticia = db.data[index];
+
+                // Verifica se os dados da noticía batem com os filtros
+                if (((noticia.publicoalvo == fc) || (fc == '')) &&
+                    ((noticia.categoria == fcg) || (fcg == ''))) {
+                    
+                    // Inclui o contato na tabela    
+                    $("#table-noticia").append(`<tr><td scope="row">${noticia.id}</td>
+                        <td>${noticia.titulo}</td>
+                                                <td>${noticia.autores}</td>
+                                                <td>${noticia.publicoalvo}</td>
+                                                <td>${noticia.categoria}</td>
+                                                <td>${noticia.descricao}</td>
+                                                <td>${noticia.palavraschave}</td>
+                                                <td>${noticia.texto}</td>
+                                                <td>${noticia.video}</td>
+                                                <td>${noticia.legendavideo}</td>
+                                                <td>${noticia.imagem}</td>
+                                                <td>${noticia.legendaimagem}</td>
+                                                </tr>`);
+                }
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>
