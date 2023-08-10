@@ -24,5 +24,5 @@ Diante disso, torna-se fundamental que existam ferramentas que auxiliem a tercei
 ## Link do Site
 * https://isenior-1.beatrizfulgenci.repl.co
 
-* ## Link de Apresentação do Trabalho
+## Link de Apresentação do Trabalho
 * https://www.youtube.com/watch?v=UisbxD0yMGs&t=145s
